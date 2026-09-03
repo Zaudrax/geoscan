@@ -109,12 +109,18 @@ return [
 
     'enumeration' => [
         /*
-         * A run's request ceiling. It now only bounds the damage: since slices
-         * are batched (see batchable_facets), a pool of 80 results harvests in
-         * about ten requests instead of 78 one by one. Measured 2026-09-03: a
-         * budget of 30 left 49 of the 77 port slices never visited.
+         * A run's request ceiling, and the single number that decides how long
+         * we stay on shodan.io: at ten seconds a request, 30 is five minutes.
+         *
+         * The default is deliberately modest -- "only scrape what the demo
+         * needs". Since slices are batched (see batchable_facets), a pool of 80
+         * results harvests in about ten requests instead of 78 one by one, so
+         * 30 covers an ordinary run. An exhaustive sweep needs more: measured
+         * 2026-09-03, a budget of 30 left 49 of the 77 port slices unvisited.
+         * Raising it is an explicit decision, taken in .env, not a default
+         * everyone inherits.
          */
-        'max_requests' => (int) env('SHODAN_MAX_REQUESTS_PER_RUN', 150),
+        'max_requests' => (int) env('SHODAN_MAX_REQUESTS_PER_RUN', 30),
 
         /*
          * Maximum depth of the descent. The residual is split on the same facet

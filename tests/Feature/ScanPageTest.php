@@ -74,6 +74,25 @@ class ScanPageTest extends TestCase
     }
 
     #[Test]
+    public function le_scan_porte_le_plafond_de_requetes_configure(): void
+    {
+        Queue::fake();
+
+        // The ceiling decides how long we stay on shodan.io: at ten seconds a
+        // request, it is the crawl policy expressed as a number. It is frozen
+        // on the scan at creation, so raising it later never retroactively
+        // extends a run already queued.
+        config()->set('geoscan.enumeration.max_requests', 12);
+
+        $this->post(route('scans.store'), [
+            'country_code' => 'SE',
+            'base_term' => 'Server: yawcam',
+        ])->assertSessionHasNoErrors();
+
+        $this->assertSame(12, Scan::sole()->max_requests);
+    }
+
+    #[Test]
     public function un_terme_de_banniere_lance_un_scan_sans_horodatage(): void
     {
         Queue::fake();

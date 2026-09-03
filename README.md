@@ -254,7 +254,7 @@ des tests de non-régression :
 php artisan test          # ou : vendor/bin/phpunit --testdox
 ```
 
-**151 tests, 408 assertions**, sans aucune requête réseau réelle.
+**154 tests, 415 assertions**, sans aucune requête réseau réelle.
 
 | Fichier | Ce qui est vérifié |
 |---|---|

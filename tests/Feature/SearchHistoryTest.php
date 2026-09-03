@@ -37,6 +37,17 @@ class SearchHistoryTest extends TestCase
     }
 
     #[Test]
+    public function la_page_daccueil_mene_a_lhistorique_des_recherches(): void
+    {
+        // The search flow -- scrape, then read back the archive -- is what the
+        // application is for. A visitor should land on it, not on a side
+        // feature.
+        $this->get('/')->assertRedirect('/recherches');
+
+        Http::assertNothingSent();
+    }
+
+    #[Test]
     public function la_liste_de_lhistorique_ne_declenche_aucune_requete(): void
     {
         $this->archiveUneRecherche();

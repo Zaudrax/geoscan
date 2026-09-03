@@ -43,6 +43,20 @@ class WatchTest extends TestCase
     }
 
     #[Test]
+    public function un_passage_de_veille_porte_le_meme_plafond_de_requetes(): void
+    {
+        // A scan nobody is watching must not be allowed to run longer than one
+        // a human started: the scheduler reads the same ceiling as the form.
+        config()->set('geoscan.enumeration.max_requests', 12);
+
+        Watch::factory()->create();
+
+        $this->artisan(RunDueWatches::class)->assertSuccessful();
+
+        $this->assertSame(12, Scan::sole()->max_requests);
+    }
+
+    #[Test]
     public function une_veille_qui_vient_de_tourner_nest_pas_rejouee(): void
     {
         Watch::factory()->justRan()->create(['interval_hours' => 24]);

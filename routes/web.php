@@ -26,7 +26,10 @@ use Illuminate\Support\Facades\Route;
 | Same for "/recherches/nouvelle".
 */
 
-Route::redirect('/', '/scans')->name('home');
+// The landing page points at the search flow: it is the application's core --
+// scrape a search, then read it back from the archive -- and the first thing a
+// visitor should meet.
+Route::redirect('/', '/recherches')->name('home');
 
 /*
 |--------------------------------------------------------------------------

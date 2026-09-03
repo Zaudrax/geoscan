@@ -65,7 +65,7 @@ class RunDueWatches extends Command
             'country_code' => $watch->country_code,
             'base_term' => $watch->base_term,
             'base_query' => $watch->shodanQuery(),
-            'max_requests' => (int) config('geoscan.enumeration.max_requests', 150),
+            'max_requests' => (int) config('geoscan.enumeration.max_requests', 30),
             'status' => Scan::STATUS_RUNNING,
             'started_at' => now(),
         ]);
