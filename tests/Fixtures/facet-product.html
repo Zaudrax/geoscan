@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-theme="system">
+  <head>
+    <title>Facet Analysis</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Search Engine for the Internet of Things">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://wire.shodan.io/v3.0.4/wire-next.css" rel="stylesheet"/>
+<script>let themeName = 'system';
+if (themeName === 'system') {
+    themeName = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+const dataset = document.documentElement.dataset;
+dataset.theme = themeName;
+dataset.themeScheme = themeName === 'light' ? 'light' : 'dark';
+</script>
+    <link rel="stylesheet" href="https://www.shodan.io/static/styles/styles-03d95c7d.css">
+    <link rel="shortcut icon" href="https://www.shodan.io/static/img/favicon-60c1b1cd.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://www.shodan.io/static/img/apple-touch-icon-192-4eb04af5.png">
+    <link rel="search" href="https://www.shodan.io/static/opensearch-07a9aa48.xml" type="application/opensearchdescription+xml" title="Shodan">
+    <script defer src="https://kit.fontawesome.com/b7e79643d9.js" crossorigin="anonymous"></script>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="@shodanhq"/>
+<meta name="twitter:creator" content="@achillean"/>
+<meta name="twitter:title" content="Shodan Facet Analysis"/>
+<meta name="twitter:image" content="https://www.shodan.io/search/facet.png?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT&amp;facet=product"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Shodan Facet Analysis"/>
+<meta property="og:image" content="https://www.shodan.io/search/facet.png?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT&amp;facet=product"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:description" content="29 results found for search query: country:&#34;PL&#34; port:80 Date: Tue, 01 Sep 2026 09:14:07 GMT"/>
+<meta property="og:description" content="29 results found for search query: country:&#34;PL&#34; port:80 Date: Tue, 01 Sep 2026 09:14:07 GMT"/>
+  </head>
+  <body>
+<div class="quickbar">
+  <ul>
+    <li><a href="https://www.shodan.io">Shodan</a>
+    </li>
+    <li><a href="https://maps.shodan.io">Maps</a>
+    </li>
+    <li><a href="https://images.shodan.io">Images</a>
+    </li>
+    <li><a href="https://monitor.shodan.io">Monitor</a>
+    </li>
+    <li><a href="https://developer.shodan.io">Developer</a>
+    </li>
+    <li><a href="https://www.shodan.io/about/products">More...</a>
+    </li>
+  </ul>
+</div>
+    <header class="lgc-container u-full-width">
+<style>.searchbox {
+    font-family: Arial;
+}
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+@media (max-width: 900px) {
+    .right-menu .menu-item-account {
+        display: none
+    }
+}
+</style>
+
+<nav class="navbar">
+  <input id="menu-btn" type="checkbox" class="menu-btn"/>
+  <label for="menu-btn" class="menu-icon"><span class="navicon"><i class="fa fa-bars  fa-fw "></i></span>
+  </label><a href="/dashboard" class="title"><img src="https://www.shodan.io/static/img/logo-6abcc86b.png" alt="Shodan" width="112" height="32"/></a>
+  <ul class="menu sub-menu">
+    <li><a href="/explore"><i class="fas fa-globe  fa-fw "></i>Explore</a>
+    </li>
+
+    <li><a href="/download"><i class="fas fa-download  fa-fw "></i>Downloads</a>
+    </li>
+    <li><a href="https://account.shodan.io/billing" target="_blank" rel="noopener noreferrer"><i class="fas fa-briefcase  fa-fw "></i>Pricing
+<i style="font-size: 0.6875rem" class="fa fa-external-link  fa-fw "></i></a>
+    </li>
+    <li class="menu-item-account"><a href="https://account.shodan.io"><i class="fas fa-user  fa-fw "></i>Account</a>
+
+    </li>
+  </ul>
+  <form action="/search" method="GET">
+    <div class="searchbox">
+      <div class="input-wrapper">
+        <label for="search-query" value="Enter search query" class="visually-hidden"></label>
+        <input id="search-query" type="text" name="query" placeholder="Type / to search" value="country:&#34;PL&#34; port:80 Date: Tue, 01 Sep 2026 09:14:07 GMT" autocapitalize="none" spellcheck="false" data-focus-placeholder="Search" data-blur-placeholder="Type / to search"/>
+      </div>
+      <button type="submit" aria-label="Submit search query" class="button button-3d button-red"><i class="fas fa-search  fa-fw "></i>
+      </button>
+    </div>
+  </form>
+  <ul class="menu main-menu right-menu">
+    <li class="menu-item-account"><a href="https://account.shodan.io">Account</a>
+    </li>
+  </ul>
+</nav>
+      <div class="lgc-container">
+      </div>
+    </header>
+    <main><br/><br/>
+<div class="lgc-container filters">
+  <h3 class="heading-highlight"><span>Facet Analysis</span>
+  </h3>
+  <form action="/search/facet" method="GET">
+    <div class="searchbox facet-searchbox">
+      <input name="query" placeholder="Search query..." value="country:&#34;PL&#34; port:80 Date: Tue, 01 Sep 2026 09:14:07 GMT" type="text" required="required" autocapitalize="none" class="query"/>
+      <select name="facet">
+        <option value="asn">asn</option>
+        <option value="bitcoin.ip">bitcoin.ip</option>
+        <option value="bitcoin.ip_count">bitcoin.ip_count</option>
+        <option value="bitcoin.port">bitcoin.port</option>
+        <option value="bitcoin.user_agent">bitcoin.user_agent</option>
+        <option value="bitcoin.version">bitcoin.version</option>
+        <option value="city">city</option>
+        <option value="cloud.provider">cloud.provider</option>
+        <option value="cloud.region">cloud.region</option>
+        <option value="cloud.service">cloud.service</option>
+        <option value="country">country</option>
+        <option value="cpe">cpe</option>
+        <option value="device">device</option>
+        <option value="domain">domain</option>
+        <option value="google_ads">google_ads</option>
+        <option value="google_analytics">google_analytics</option>
+        <option value="google_tag_manager">google_tag_manager</option>
+        <option value="has_screenshot">has_screenshot</option>
+        <option value="hash">hash</option>
+        <option value="http.component">http.component</option>
+        <option value="http.component_category">http.component_category</option>
+        <option value="http.dom_hash">http.dom_hash</option>
+        <option value="http.favicon.hash">http.favicon.hash</option>
+        <option value="http.headers_hash">http.headers_hash</option>
+        <option value="http.html_hash">http.html_hash</option>
+        <option value="http.robots_hash">http.robots_hash</option>
+        <option value="http.server_hash">http.server_hash</option>
+        <option value="http.status">http.status</option>
+        <option value="http.title">http.title</option>
+        <option value="http.title_hash">http.title_hash</option>
+        <option value="http.waf">http.waf</option>
+        <option value="ip">ip</option>
+        <option value="isp">isp</option>
+        <option value="link">link</option>
+        <option value="meta_pixel">meta_pixel</option>
+        <option value="mongodb.database.name">mongodb.database.name</option>
+        <option value="ntp.ip">ntp.ip</option>
+        <option value="ntp.ip_count">ntp.ip_count</option>
+        <option value="ntp.more">ntp.more</option>
+        <option value="ntp.port">ntp.port</option>
+        <option value="open_dir.extension">open_dir.extension</option>
+        <option value="open_dir.hash">open_dir.hash</option>
+        <option value="org">org</option>
+        <option value="os">os</option>
+        <option value="port">port</option>
+        <option value="postal">postal</option>
+        <option value="product" selected="selected">product</option>
+        <option value="redis.key">redis.key</option>
+        <option value="region">region</option>
+        <option value="rsync.module">rsync.module</option>
+        <option value="screenshot.hash">screenshot.hash</option>
+        <option value="screenshot.label">screenshot.label</option>
+        <option value="snmp.contact">snmp.contact</option>
+        <option value="snmp.location">snmp.location</option>
+        <option value="snmp.name">snmp.name</option>
+        <option value="ssh.cipher">ssh.cipher</option>
+        <option value="ssh.fingerprint">ssh.fingerprint</option>
+        <option value="ssh.hassh">ssh.hassh</option>
+        <option value="ssh.mac">ssh.mac</option>
+        <option value="ssh.type">ssh.type</option>
+        <option value="ssl.alpn">ssl.alpn</option>
+        <option value="ssl.cert.alg">ssl.cert.alg</option>
+        <option value="ssl.cert.expired">ssl.cert.expired</option>
+        <option value="ssl.cert.extension">ssl.cert.extension</option>
+        <option value="ssl.cert.fingerprint">ssl.cert.fingerprint</option>
+        <option value="ssl.cert.issuer.cn">ssl.cert.issuer.cn</option>
+        <option value="ssl.cert.pubkey.bits">ssl.cert.pubkey.bits</option>
+        <option value="ssl.cert.pubkey.type">ssl.cert.pubkey.type</option>
+        <option value="ssl.cert.serial">ssl.cert.serial</option>
+        <option value="ssl.cert.subject.cn">ssl.cert.subject.cn</option>
+        <option value="ssl.chain_count">ssl.chain_count</option>
+        <option value="ssl.cipher.bits">ssl.cipher.bits</option>
+        <option value="ssl.cipher.name">ssl.cipher.name</option>
+        <option value="ssl.cipher.version">ssl.cipher.version</option>
+        <option value="ssl.ja3s">ssl.ja3s</option>
+        <option value="ssl.jarm">ssl.jarm</option>
+        <option value="ssl.version">ssl.version</option>
+        <option value="state">state</option>
+        <option value="tag">tag</option>
+        <option value="telnet.do">telnet.do</option>
+        <option value="telnet.dont">telnet.dont</option>
+        <option value="telnet.option">telnet.option</option>
+        <option value="telnet.will">telnet.will</option>
+        <option value="telnet.wont">telnet.wont</option>
+        <option value="tiktok_pixel">tiktok_pixel</option>
+        <option value="uptime">uptime</option>
+        <option value="version">version</option>
+        <option value="vuln">vuln</option>
+        <option value="vuln.verified">vuln.verified</option>
+        <option value="x_pixel">x_pixel</option>
+      </select>
+      <button type="submit" class="button button-primary px-5"><i class="fas fa-search  fa-fw "></i>
+      </button>
+    </div>
+  </form>
+  <div class="flex items-center mb-2">
+    <h6 class="grid-heading flex-1">Total: 29</h6>
+    <div class="facet-report"><a href="/search/facet.png?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT&amp;facet=product" class="button button-primary button-soft text-base"><i class="fas fa-chart-bar  fa-fw "></i></a>
+    </div>
+  </div>
+  <div class="card card-padding u-full-width facets-card">
+    <div class="name"><a href="/search?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT+product%3A%22Apache+httpd%22" class="text-dark"><strong>Apache httpd</strong></a>
+    </div>
+    <div class="value">9</div>
+    <div class="bar">
+      <div style="width:100.0%;" class="bg-info"></div>
+    </div>
+    <div class="name"><a href="/search?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT+product%3A%22nginx%22" class="text-dark"><strong>nginx</strong></a>
+    </div>
+    <div class="value">8</div>
+    <div class="bar">
+      <div style="width:88.89%;" class="bg-info"></div>
+    </div>
+    <div class="name"><a href="/search?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT+product%3A%22Hikvision+IP+Camera%22" class="text-dark"><strong>Hikvision IP Camera</strong></a>
+    </div>
+    <div class="value">7</div>
+    <div class="bar">
+      <div style="width:77.78%;" class="bg-info"></div>
+    </div>
+    <div class="name"><a href="/search?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT+product%3A%22Dahua+BCS-XVR1601-IV%22" class="text-dark"><strong>Dahua BCS-XVR1601-IV</strong></a>
+    </div>
+    <div class="value">1</div>
+    <div class="bar">
+      <div style="width:11.11%;" class="bg-info"></div>
+    </div>
+    <div class="name"><a href="/search?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT+product%3A%22Dahua-based+DVR%22" class="text-dark"><strong>Dahua-based DVR</strong></a>
+    </div>
+    <div class="value">1</div>
+    <div class="bar">
+      <div style="width:11.11%;" class="bg-info"></div>
+    </div>
+    <div class="name"><a href="/search?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT+product%3A%22LiteSpeed+httpd%22" class="text-dark"><strong>LiteSpeed httpd</strong></a>
+    </div>
+    <div class="value">1</div>
+    <div class="bar">
+      <div style="width:11.11%;" class="bg-info"></div>
+    </div>
+    <div class="name"><a href="/search?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT+product%3A%22Microsoft+IIS+httpd%22" class="text-dark"><strong>Microsoft IIS httpd</strong></a>
+    </div>
+    <div class="value">1</div>
+    <div class="bar">
+      <div style="width:11.11%;" class="bg-info"></div>
+    </div>
+    <div class="name"><a href="/search?query=country%3A%22PL%22+port%3A80+Date%3A+Tue%2C+01+Sep+2026+09%3A14%3A07+GMT+product%3A%22OpenResty%22" class="text-dark"><strong>OpenResty</strong></a>
+    </div>
+    <div class="value">1</div>
+    <div class="bar">
+      <div style="width:11.11%;" class="bg-info"></div>
+    </div>
+  </div>
+</div>
+    </main>
+<br/>
+<footer class="footer bg-solid">
+  <div class="lgc-container">
+    <div>
+      <h6 class="grid-heading">Products</h6>
+      <ul>
+        <li><a href="https://monitor.shodan.io" class="text-light text-xs">Monitor</a>
+        </li>
+        <li><a href="https://shodan.io" class="text-light text-xs">Search Engine</a>
+        </li>
+        <li><a href="https://developer.shodan.io" class="text-light text-xs">Developer API</a>
+        </li>
+        <li><a href="https://maps.shodan.io" class="text-light text-xs">Maps</a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h6 class="grid-heading invisible"></h6>
+      <ul>
+        <li><a href="https://enterprise.shodan.io" class="text-light text-xs">Bulk Data</a>
+        </li>
+        <li><a href="https://images.shodan.io" class="text-light text-xs">Images</a>
+        </li>
+        <li><a href="https://snippets.shodan.io" class="text-light text-xs">Snippets</a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h6 class="grid-heading">Pricing</h6>
+      <ul>
+        <li><a href="https://www.shodan.io/store/member" class="text-light text-xs">Membership</a>
+        </li>
+        <li><a href="https://developer.shodan.io/pricing" class="text-light text-xs">API Subscriptions</a>
+        </li>
+        <li><a href="https://enterprise.shodan.io" class="text-light text-xs">Enterprise</a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h6 class="grid-heading">Contact Us</h6>
+      <ul>
+        <li><a href="mailto:support@shodan.io" class="text-light text-xs">support@shodan.io</a>
+        </li>
+        <li class="links"><a href="https://www.linkedin.com/company/shodan" data-tip="LinkedIn" class="tooltip text-secondary"><i class="fab fa-linkedin   "></i></a><a href="https://mastodon.shodan.io/@shodan" data-tip="Mastodon" class="tooltip text-secondary"><i class="fab fa-mastodon   "></i></a><a href="https://twitter.com/shodanhq" data-tip="Twitter" class="tooltip text-secondary"><i class="fab fa-twitter   "></i></a><a href="https://www.facebook.com/shodan.io" data-tip="Facebook" class="tooltip text-secondary"><i class="fab fa-facebook   "></i></a>
+        </li>
+      </ul>
+      <p class="text-secondary text-xs">Shodan &reg; - All rights reserved</p>
+    </div>
+  </div>
+</footer>
+    <script src="https://www.shodan.io/static/scripts/main-8f2704e5.js"></script>
+  </body>
+</html>

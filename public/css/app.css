@@ -1,0 +1,364 @@
+/* ============================================================================
+   GeoScan -- stylesheet
+   ----------------------------------------------------------------------------
+   DESIGN INTENT. This application produces evidence: harvested observations,
+   host timelines, exposure findings, a compliance journal. Its closest paper
+   relative is a technical dossier, not a dashboard. The visual language follows
+   from that:
+     - a warm paper ground rather than the dark, glowing console look;
+     - hairline rules and square corners instead of floating rounded cards;
+     - monospace for everything a machine produced (IPs, ports, queries, CVEs,
+       timestamps, counts) and a text face for everything a human wrote;
+     - one restrained ink-blue accent, and a severity palette borrowed from
+       print rather than from neon.
+   Density is deliberate: this is an instrument, and its user is reading tables.
+
+   Order: tokens, base, layout, chrome, typography, blocks, forms, tables,
+   data display, domain components, utilities.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- tokens -- */
+:root {
+    /* Ground and ink. The paper is warm so long reading sessions stay easy. */
+    --paper:      #f4f2ec;
+    --panel:      #fbfaf7;
+    --ink:        #17191d;
+    --ink-soft:   #4a4f57;
+    --muted:      #767b83;
+
+    /* Rules do the work borders and shadows would do elsewhere. */
+    --rule:       #ded9cd;
+    --rule-firm:  #b9b3a5;
+
+    --accent:     #1f4b87;
+    --accent-sub: #e7ecf4;
+
+    /* Severity, taken from printing inks: readable, never shouting. */
+    --sev-critical: #9c211b;
+    --sev-high:     #9c5d15;
+    --sev-medium:   #736410;
+    --sev-info:     #5b636d;
+    --positive:     #2f6b46;
+
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --text: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, sans-serif;
+}
+
+/* ------------------------------------------------------------------ base -- */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 15px/1.65 var(--text);
+    /* Numbers line up in columns, which is the whole point of the tables. */
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-sub); }
+a:hover { border-bottom-color: var(--accent); }
+
+hr { border: 0; border-top: 1px solid var(--rule); margin: 28px 0; }
+
+/* ---------------------------------------------------------------- layout -- */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px 72px; }
+.wrap.narrow { max-width: 720px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+@media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+
+/* ---------------------------------------------------------------- chrome -- */
+/* The masthead reads like a document header: a rule, a name, an index. */
+header.topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--rule-firm);
+    margin-bottom: 40px;
+}
+.topbar .wrap {
+    display: flex; align-items: baseline; gap: 32px; flex-wrap: wrap;
+    padding-top: 18px; padding-bottom: 18px;
+}
+.brand {
+    font-family: var(--mono);
+    font-size: 15px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+}
+.brand span { color: var(--accent); }
+
+.topbar nav { display: flex; gap: 22px; flex-wrap: wrap; align-items: baseline; flex: 1; font-family: var(--mono); font-size: 12.5px; }
+.topbar nav a {
+    color: var(--muted); border-bottom: 0;
+    padding-bottom: 3px; border-bottom: 2px solid transparent;
+    letter-spacing: 0.03em;
+}
+.topbar nav a:hover { color: var(--ink); }
+.topbar nav a.active { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* Logging out must be a POST, but it belongs in the index visually. It is
+   pushed to the far right so the navigation reads as an index and the session
+   control as a separate, secondary affordance. */
+.topbar nav .inline-form { display: inline; margin: 0 0 0 auto; }
+.topbar nav .link-button {
+    background: none; border: 0; padding: 0 0 3px; margin: 0;
+    font: inherit; color: var(--muted); cursor: pointer;
+    /* Reset the button rule: this one is a link, not a call to action. */
+    text-transform: none; letter-spacing: 0.03em;
+    border-bottom: 2px solid transparent;
+}
+.topbar nav .link-button:hover { color: var(--ink); background: none; }
+
+/* ------------------------------------------------------------ typography -- */
+h1 {
+    font-size: 25px; font-weight: 600; letter-spacing: -0.01em;
+    margin: 0 0 6px;
+}
+h2 {
+    font-family: var(--mono);
+    font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+}
+.lede { color: var(--ink-soft); margin: 0 0 30px; font-size: 14.5px; max-width: 74ch; }
+.footnote { color: var(--muted); font-size: 12.5px; line-height: 1.6; max-width: 78ch; }
+.explain { color: var(--muted); font-size: 13px; max-width: 78ch; }
+.empty { color: var(--muted); font-style: italic; margin: 0; }
+
+/* Machine output is always monospaced. That is the rule the page never breaks.
+   The size step is relative so it never demotes a heading that happens to hold
+   machine output -- an IP is still a title when it is the subject of the page. */
+.mono { font-family: var(--mono); font-size: 0.94em; }
+h1.mono { font-size: 23px; letter-spacing: 0; }
+.small { font-size: 12.5px; }
+.dim { color: var(--muted); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.ok { color: var(--positive); }
+
+/* ---------------------------------------------------------------- blocks -- */
+/* A panel, not a card: square, hairline, flat. Nothing floats on paper. */
+.card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    padding: 22px 24px;
+    margin-bottom: 22px;
+}
+
+.alert {
+    border: 1px solid var(--rule-firm);
+    border-left-width: 3px;
+    background: var(--panel);
+    padding: 12px 16px;
+    margin-bottom: 22px;
+    font-size: 14px;
+}
+.alert-success { border-left-color: var(--positive); }
+.alert-error   { border-left-color: var(--sev-critical); }
+.alert-info    { border-left-color: var(--accent); }
+
+/* ----------------------------------------------------------------- forms -- */
+label, label.field {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 7px;
+}
+input[type=text], input[type=email], input[type=password],
+input[type=number], input[type=date], select, textarea {
+    width: 100%;
+    padding: 9px 11px;
+    background: #fff;
+    border: 1px solid var(--rule-firm);
+    color: var(--ink);
+    font: 14px var(--mono);
+    border-radius: 0;
+}
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: -1px;
+    border-color: var(--accent);
+}
+input[type=checkbox] { width: auto; margin-right: 6px; }
+
+button, .button {
+    font: 12px var(--mono);
+    letter-spacing: 0.09em; text-transform: uppercase;
+    background: var(--ink); color: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 10px 18px;
+    cursor: pointer;
+    border-radius: 0;
+}
+button:hover { background: var(--accent); border-color: var(--accent); }
+button.reset {
+    background: transparent; color: var(--ink-soft); border-color: var(--rule-firm);
+}
+button.reset:hover { background: transparent; color: var(--ink); border-color: var(--ink); }
+
+/* A submit button that directly follows a field needs air: without it, it
+   reads as attached to the input rather than as the end of the form. */
+form > button { margin-top: 18px; }
+
+.form-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
+.form-cell { flex: 1 1 150px; min-width: 0; }
+.form-cell.grow { flex: 3 1 320px; }
+.search-inline { display: flex; gap: 10px; align-items: flex-end; }
+
+/* ---------------------------------------------------------------- tables -- */
+.table-scroll { overflow-x: auto; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th {
+    font-family: var(--mono);
+    font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    padding: 0 12px 8px 0;
+    border-bottom: 1px solid var(--rule-firm);
+    white-space: nowrap;
+}
+th.num { text-align: right; }
+td {
+    padding: 9px 12px 9px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: #fff; }
+
+/* ---------------------------------------------------- data display bits -- */
+/* A chip is a label, not a pill: square, hairline, monospaced. */
+.chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px; line-height: 1.5;
+    padding: 2px 7px;
+    margin: 0 4px 4px 0;
+    border: 1px solid var(--rule-firm);
+    background: #fff;
+    color: var(--ink-soft);
+    white-space: nowrap;
+}
+.chip.small { font-size: 10.5px; }
+/* Ports are data, not alerts: they stay neutral. The accent is reserved for
+   things the reader is meant to act on, and a host can expose hundreds. */
+.chip.port { border-color: var(--rule-firm); color: var(--ink-soft); }
+.chip.chip-active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+.badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 2px 7px;
+    border: 1px solid var(--rule-firm);
+    background: #fff; color: var(--ink-soft);
+}
+.badge-completed, .badge-step-harvested { border-color: var(--positive); color: var(--positive); }
+.badge-running   { border-color: var(--accent); color: var(--accent); }
+.badge-failed, .badge-step-failed { border-color: var(--sev-critical); color: var(--sev-critical); }
+.badge-budget_exhausted, .badge-step-budget_exhausted,
+.badge-step-abandoned { border-color: var(--sev-high); color: var(--sev-high); }
+.badge-step-split { border-color: var(--rule-firm); color: var(--ink-soft); }
+
+/* Headline figures: the number carries the weight, the label whispers. */
+.stats { display: flex; flex-wrap: wrap; gap: 40px; margin-bottom: 30px; }
+.stat { min-width: 96px; }
+.stat-value {
+    display: block;
+    font-family: var(--mono);
+    font-size: 30px; font-weight: 500; letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+.stat-value.beat { color: var(--positive); }
+.stat-label, .total-label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+}
+.total { font-family: var(--mono); font-size: 34px; font-weight: 500; letter-spacing: -0.02em; }
+
+/* Definition lists carry the "general information" blocks. */
+dl.info { display: grid; grid-template-columns: auto 1fr; gap: 7px 18px; margin: 0; font-size: 13.5px; }
+dl.info dt {
+    font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); padding-top: 3px;
+}
+dl.info dd { margin: 0; }
+
+/* Facet lists: a proportional bar is enough, no chart library needed. */
+.facet { margin-bottom: 22px; }
+.facet-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.facet-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.facet-count { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.facet-link { display: block; font-size: 13px; padding: 2px 0; border-bottom: 0; }
+.bar { height: 2px; background: var(--rule); margin-top: 3px; }
+.bar > i { display: block; height: 100%; background: var(--accent); }
+
+/* ---------------------------------------------------- domain components -- */
+/* Exposure levels. Muted print inks: the grid ranks, it does not alarm. */
+.chip.level-critique { border-color: var(--sev-critical); color: var(--sev-critical); }
+.chip.level-eleve    { border-color: var(--sev-high);     color: var(--sev-high); }
+.chip.level-modere   { border-color: var(--sev-medium);   color: var(--sev-medium); }
+.chip.level-info     { border-color: var(--rule-firm);    color: var(--sev-info); }
+
+ul.findings { list-style: none; margin: 0; padding: 0; }
+ul.findings li { padding: 12px 0; border-bottom: 1px solid var(--rule); }
+ul.findings li:last-child { border-bottom: 0; }
+.finding-why { color: var(--ink-soft); font-size: 13px; margin-top: 5px; max-width: 80ch; }
+
+/* Host timeline. A ruled left margin, like a lab notebook. */
+ul.timeline { list-style: none; margin: 0; padding: 0 0 0 20px; border-left: 1px solid var(--rule-firm); }
+ul.timeline > li { position: relative; padding: 0 0 22px 14px; }
+ul.timeline > li::before {
+    content: ""; position: absolute; left: -25px; top: 8px;
+    width: 9px; height: 9px; background: var(--paper);
+    border: 1px solid var(--rule-firm);
+}
+ul.timeline > li.current::before { background: var(--accent); border-color: var(--accent); }
+ul.timeline time { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+.snap-body { font-size: 13.5px; margin-top: 3px; }
+
+/* What changed between two snapshots. Appeared vs disappeared. */
+ul.changes { list-style: none; margin: 8px 0 0; padding: 0; }
+ul.changes li { margin: 5px 0; font-size: 13px; line-height: 1.9; }
+.change-field {
+    font-family: var(--mono);
+    font-size: 10.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); margin-right: 8px;
+}
+.change-arrow { color: var(--muted); margin: 0 3px; }
+.chip.added   { border-color: var(--positive); color: var(--positive); }
+.chip.removed { border-color: var(--sev-critical); color: var(--sev-critical); }
+
+/* The split trace: indentation is the argument, so it must read as a tree. */
+.trace td.tree { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; }
+.trace .depth { color: var(--rule-firm); }
+
+/* Map. Squared off and ruled like everything else. */
+.map { height: 460px; border: 1px solid var(--rule-firm); background: var(--panel); }
+.map-note { color: var(--muted); font-size: 12px; margin-top: 8px; }
+.live-toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.live-row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.live-slot { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+.scan-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+.scan-body { font-size: 13.5px; }
+.active-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 16px; }
+.filters { font-size: 13px; }
+.results { margin-top: 8px; }
+.candidates { margin-top: 8px; }
+.pending { color: var(--sev-high); }
+.split { color: var(--ink-soft); }
+.info { color: var(--ink-soft); }
+.accent { color: var(--accent); }
+
+/* Laravel's paginator, brought into the same visual system. */
+nav[role="navigation"] { font-family: var(--mono); font-size: 12px; margin-top: 20px; }
+nav[role="navigation"] svg { width: 14px; height: 14px; }
